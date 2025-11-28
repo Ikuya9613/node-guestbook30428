@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線上小畫板</title>
+    <script src="draw.js" defer></script>
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft JhengHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        header {
+            background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .main {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            padding: 30px;
+        }
+        #canvas {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            cursor: crosshair;
+            display: block;
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+        }
+
+        .toolbar {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+        .control-group {
+            margin-bottom: 24px;
+        }
+        .control-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #color {
+            width: 80px;
+            height: 80px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        #color::-webkit-color-swatch { border-radius: 50%; }
+        #color::-moz-color-swatch { border-radius: 50%; }
+
+        #lineWidth {
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #ddd;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        #lineWidth::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #4facfe;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .value-display {
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #4facfe;
+            margin-top: 8px;
+        }
+
+        .btn-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        #toshow {
+            background: linear-gradient(45deg, #43e97b, #38f9d7);
+            color: white;
+        }
+        #clear {
+            background: linear-gradient(45deg, #fa709a, #fee140);
+            color: white;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        #show {
+            margin-top: 20px;
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.05);
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            .main { grid-template-columns: 1fr; }
+            .toolbar { order: -1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>線上小畫板</h1>
+            <p>隨心所欲畫出你的創意～</p>
+        </header>
+
+        <div class="main">
+            <canvas id="canvas" width="1600" height="900"></canvas>
+
+            <div class="toolbar">
+                <div class="control-group">
+                    <label>顏色</label>
+                    <div class="color-picker">
+                        <input id="color" type="color" value="#000000">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>筆觸粗細 <span class="value-display" id="value">5</span></label>
+                    <input id="lineWidth" type="range" min="1" max="50" step="1" value="5">
+                </div>
+
+                <div class="btn-group">
+                    <button id="toshow" class="btn">產生圖片</button>
+                    <button id="clear" class="btn">清除畫布</button>
+                </div>
+
+                <img id="show" alt="這裡會顯示產生的圖片" style="display:none;">
+            </div>
+        </div>
+
+        <footer>
+            © 2025 線上小畫板
+        </footer>
+    </div>
+</body>
+</html>

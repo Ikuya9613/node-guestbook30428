@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>猜數字遊戲</title>
+    <link rel="stylesheet" href="styles-guess.css">
+    <script src="guess.js" defer></script>
+</head>
+<body>
+    <main class="app">
+        <section class="card">
+            <h1 class="title">猜數字遊戲</h1>
+            <p class="instructions">我已經選好了一個 1 到 100 之間的數字。你能在 10 次之內猜中它嗎？</p>
+            
+            <label for="guessField" class="label">猜一個數字 (1 到 100)</label>
+            <div class="controls">
+                <input type="number" class="guessField" id="guessField" min="1" max="100" inputmode="numeric" />
+                <button class="btn guessSubmit">提交</button>
+                <button class="btn reset">重置</button>
+            </div>
+
+            <p class="guesses" aria-live="polite">歷史紀錄：<span class="guessHistory"></span></p>
+            <div class="result" aria-live="polite"></div>
+            <div class="count" aria-live="polite"></div>
+        </section>
+        <footer class="foot">提示：使用鍵盤輸入，按提交或 Enter 提交答案</footer>
+    </main>
+</body>
+</html>
