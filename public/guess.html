@@ -4,8 +4,135 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>猜數字遊戲</title>
-    <link rel="stylesheet" href="styles-guess.css">
-    <script src="guess.js" defer></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Noto Sans TC', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .app {
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            color: white;
+        }
+
+        .title {
+            font-size: 2.8rem;
+            margin: 0 0 20px;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .guessField {
+            flex: 1;
+            min-width: 175px;
+            padding: 16px 20px;
+            font-size: 1.4rem;
+            text-align: center;
+            border: none;
+            border-radius: 16px;
+            background: rgba(255,255,255,0.25);
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .guessField::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .btn {
+            padding: 16px 32px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .guessSubmit {
+            background: #ff6b6b;
+            color: white;
+            flex: 1;
+        }
+
+        .guessSubmit:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255,107,107,0.4);
+        }
+
+        .reset {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .reset:hover {
+            background: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .guesses, .result, .count {
+            margin: 20px 0;
+            font-size: 1.3rem;
+            min-height: 1.5em;
+        }
+
+        .result {
+            font-weight: bold;
+            font-size: 1.6rem;
+        }
+
+        .foot {
+            text-align: center;
+            margin-top: 30px;
+            opacity: 0.8;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 480px) {
+            .controls { flex-direction: column; }
+            .title { font-size: 2.4rem; }
+        }
+    </style>
 </head>
 <body>
     <main class="app">
@@ -15,7 +142,7 @@
             
             <label for="guessField" class="label">猜一個數字 (1 到 100)</label>
             <div class="controls">
-                <input type="number" class="guessField" id="guessField" min="1" max="100" inputmode="numeric" />
+                <input type="number" class="guessField" id="guessField" min="1" max="100" inputmode="numeric" placeholder="輸入數字…">
                 <button class="btn guessSubmit">提交</button>
                 <button class="btn reset">重置</button>
             </div>
@@ -24,7 +151,9 @@
             <div class="result" aria-live="polite"></div>
             <div class="count" aria-live="polite"></div>
         </section>
-        <footer class="foot">提示：使用鍵盤輸入，按提交或 Enter 提交答案</footer>
+        <footer class="foot">提示：使用鍵盤輸入，按 Enter 快速提交</footer>
     </main>
+
+    <script src="guess.js" defer></script>
 </body>
 </html>
