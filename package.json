@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Ikuya9613/node-guestbook30428#readme",
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mysql2": "^3.15.3"
   }

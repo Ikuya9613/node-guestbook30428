@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= data.name %> 的個人主頁</title>
+    <style>
+        /* --- 1. 全域與 Profile 樣式 --- */
+        body {
+            font-family: "Microsoft JhengHei", sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding-top: 30px;
+            padding-bottom: 30px; /* 增加底部空間以免內容太長 */
+        }
+        
+        .card {
+            background: white;
+            width: 450px; /*稍微加寬一點以容納表單*/
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .header { text-align: center; }
+        
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid #1877f2;
+            object-fit: cover;
+        }
+        
+        .name { font-size: 24px; font-weight: bold; margin: 10px 0; }
+        .bio { color: #65676b; margin-bottom: 15px; }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #1877f2;
+        }
+
+        /* --- 貼文列表樣式 --- */
+        .post-list { list-style: none; padding: 0; }
+        .post-item { border-bottom: 1px solid #eee; padding: 10px 0; font-size: 0.95em; }
+        .no-posts { text-align: center; color: #888; font-style: italic; margin: 10px 0;}
+
+        /* --- 2. 留言板功能樣式整合 --- */
+        .guestbook-section {
+            margin-top: 30px;
+            border-top: 2px dashed #ddd; /* 使用虛線區隔個人貼文與留言板 */
+            padding-top: 20px;
+        }
+
+        .form-container {
+            background-color: #f7f8fa; /* 改淡一點的顏色配合 FB 風格 */
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .form-group { margin-bottom: 10px; }
+        
+        .form-group label { 
+            display: block; 
+            font-size: 0.9em; 
+            font-weight: bold; 
+            color: #444; 
+            margin-bottom: 4px;
+        }
+
+        /* 輸入框樣式優化 */
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+        }
+        
+        textarea { resize: vertical; } /* 允許垂直拉伸 */
+
+        button.btn-submit {
+            width: 100%;
+            background-color: #1877f2; /* 改用與 Profile 同色系的藍 */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        button.btn-submit:hover { background-color: #145dbf; }
+
+        /* 留言列表樣式 */
+        .message-item {
+            background-color: #fff;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .message-user { font-weight: bold; color: #333; }
+        .message-time { color: #999; font-size: 0.8em; }
+        .message-body { color: #555; line-height: 1.4; }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #65676b;
+            font-size: 0.9em;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="header">
+            <img src="<%= data.avatar %>" alt="大頭貼" class="avatar">            
+            <div class="name"><%= data.name %></div>            
+            <div class="bio"><%= data.bio %></div>
+        </div>
+
+        <div class="stats">
+            <span>好友數：<%= data.friends %></span>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee;">
+
+        <h3>📜 最近動態</h3>        
+        <% if (data.posts.length === 0) { %>
+            <p class="no-posts">這個人很懶，還沒有發文喔 😴</p>
+        <% } else { %>
+            <ul class="post-list">
+                <% data.posts.forEach(function(post) { %>
+                    <li class="post-item">
+                        💬 <%= post %>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>        
+
+        <div class="guestbook-section">
+            <h3>📝 給 <%= data.name %> 留言</h3>
+
+            <div class="form-container">
+                <form id="messageForm" action="/add-message" method="POST">
+                    <div class="form-group">
+                        <label for="username">你的名字：</label>
+                        <input type="text" id="username" name="username_field" placeholder="訪客" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="content">想說的話：</label>
+                        <textarea id="content" name="content_field" rows="2" placeholder="留個言吧..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-submit">送出留言</button>
+                </form>
+            </div>
+
+            <h4 style="color:#65676b;">最新訪客留言</h4>
+            <div id="messages-list">
+                <p style="text-align:center; color:#999;">載入中...</p>
+            </div>
+        </div>
+
+        <a href="/search" class="back-link">← 回首頁搜尋</a>
+    </div>
+
+    <script>
+        // 這是整合進來的 Script，負責處理留言板邏輯
+        async function loadMessages() {
+            try {
+                // 呼叫原本的 API
+                const response = await fetch('/api/messages');       
+                const messages = await response.json();
+                
+                const listDiv = document.getElementById('messages-list');       
+                listDiv.innerHTML = ''; // 清空
+
+                if (messages.length === 0) {
+                    listDiv.innerHTML = '<p style="text-align:center; color:#999;">目前還沒有人留言，搶頭香！</p>';
+                } else {
+                    // 反轉陣列，讓最新的留言顯示在上面 (如果後端沒有排序的話)
+                    messages.reverse().forEach(message => {
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message-item';               
+                        
+                        const time = new Date(message.created_at).toLocaleString();               
+                        
+                        // 使用新的 HTML 結構配合 CSS
+                        messageDiv.innerHTML = `
+                            <div class="message-header">
+                                <span class="message-user">${message.username}</span>
+                                <span class="message-time">${time}</span>
+                            </div>
+                            <div class="message-body">${message.content}</div>
+                        `;
+                        listDiv.appendChild(messageDiv);
+                    });
+                }
+            } catch (error) {
+                console.error('載入留言失敗:', error);
+                document.getElementById('messages-list').innerHTML = '<p>載入留言失敗，請稍後再試。</p>';
+            }
+        }
+
+        // 為了更好的體驗，我們可以攔截表單送出，改用 AJAX (fetch) 送出，
+        // 這樣頁面就不會刷新，可以直接看到新留言。
+        const form = document.getElementById('messageForm');
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault(); // 阻止傳統表單跳轉
+
+            const formData = new URLSearchParams(new FormData(form));
+
+            try {
+                // 送出資料給後端
+                await fetch('/add-message', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                // 清空輸入框
+                document.getElementById('content').value = '';
+                // 重新載入留言列表
+                loadMessages();
+            } catch (err) {
+                alert('留言送出失敗！');
+            }
+        });
+
+        // 頁面載入後執行
+        document.addEventListener('DOMContentLoaded', loadMessages);
+    </script>
+</body>
+</html>
