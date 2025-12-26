@@ -35,9 +35,11 @@ class Snake {
             y: this.body[0].y + this.dir.y
         };
 
-        // 撞牆或自己 → 遊戲結束
+        // 撞牆、自己或對方蛇身 → 結束
         if (head.x < 0 || head.x >= MAP_SIZE || head.y < 0 || head.y >= MAP_SIZE ||
-            this.body.some(seg => seg.x === head.x && seg.y === head.y)) {
+            this.body.some(seg => seg.x === head.x && seg.y === head.y) ||
+            (this === snake1 && snake2.body.some(seg => seg.x === head.x && seg.y === head.y)) ||
+            (this === snake2 && snake1.body.some(seg => seg.x === head.x && seg.y === head.y))) {
             gameOver();
             return;
         }
@@ -94,14 +96,14 @@ function init() {
 }
 
 function draw() {
-    ctx.fillStyle = '#000';
+    ctx.fillStyle = '#fffff0';  // 米白底
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     apple.draw();
     snake1.draw();
     snake2.draw();
 
-    ctx.fillStyle = '#0ff';
+    ctx.fillStyle = '#000';  // 分數文字黑色
     ctx.font = '20px Arial';
     ctx.fillText(`P1: ${snake1.score}`, 15, 30);
     ctx.fillText(`P2: ${snake2.score}`, canvas.width - 100, 30);

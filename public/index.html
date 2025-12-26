@@ -78,15 +78,52 @@
         .recruit-card { grid-column:1/-1; text-align:center; padding:40px; }
         .recruit-btn { display:inline-block; padding:20px 50px; background:linear-gradient(45deg,#ff4d4d,#ff1a1a); color:white; font-size:2rem; font-weight:900; text-decoration:none; border-radius:50px; box-shadow:0 15px 30px rgba(255,0,0,.4); transition:.3s; }
         .recruit-btn:hover { transform:scale(1.1); box-shadow:0 20px 40px rgba(255,0,0,.6); }
-        #back-to-top { position:fixed; bottom:30px; right:30px; width:80px; height:80px; background:rgba(255,255,255,.9); border-radius:50%; box-shadow:0 10px 30px rgba(0,0,0,.3); cursor:pointer; opacity:0; visibility:hidden; transition:.4s; z-index:999; }
+        #back-to-top {
+            position:fixed; bottom:30px; right:30px;
+            width:80px; height:80px;
+            background: #fad0c4;
+            border-radius:50%;
+            box-shadow:0 10px 30px rgba(0,0,0,.3);
+            cursor:pointer; opacity:0; visibility:hidden;
+            transition:.4s; z-index:999;
+            display:flex; align-items:center; justify-content:center;
+        }
         #back-to-top.show { opacity:1; visibility:visible; }
-        #back-to-top img { width:100%; height:100%; object-fit:contain; }
+
+        #back-to-top img {
+            width:90%; height:90%;
+            object-fit:contain;
+        }
         footer { text-align:center; padding:50px 20px; color:#666; font-size:1.1rem; }
         .easter-egg { margin-top:20px; font-size:.9rem; opacity:.7; }
 
         @media (max-width:768px) {
             header h1 { font-size:2.5rem; }
             .card h2 { font-size:1.6rem; }
+        }
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .card-link .card {
+            cursor: pointer;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.3);
         }
     </style>
 </head>
@@ -114,48 +151,55 @@
     </div>
 
     <header>
-        <h1>2025 多元選修課程</h1>
-        <p>國家領導學 × 萌物研究 × 放鬆療癒學</p>
+        <h1>HTML多元選修練習</h1>
+        <p>聲優介紹</p>
     </header>
 
     <div class="container">
         <div class="cards">
-            <div class="card">
-                <img src="Pictures/青木陽菜yay.jfif" alt="青木陽菜yay">
-                <div class="card-content">
-                    <h2><a href="https://x.com/aoki__hina?s=20" target="_blank">青木陽菜</a></h2>
-                    <p>響所属の声優、青木陽菜(あおきひな)です！</p>
+            <a href="https://x.com/aoki__hina?s=20" target="_blank" class="card-link">
+                <div class="card">
+                    <img src="Pictures/青木陽菜yay.jfif" alt="青木陽菜yay">
+                    <div class="card-content">
+                        <h2>青木陽菜</h2>
+                        <p>響所属の声優青木陽菜です！<br>アニメと音楽と鳥が好きです🕊</p>
+                    </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="card">
-                <img src="Pictures/Winnie.jpg" alt="小熊維尼">
-                <div class="card-content">
-                    <h2><a href="https://zh.wikipedia.org/wiki/%E5%B0%8F%E7%86%9F%E7%B6%AD%E5%B0%BC" target="_blank">小熊維尼</a></h2>
-                    <p>萌物研究學 學分：1000000</p>
+            <a href="https://x.com/Hina_Youmiya?s=20" target="_blank" class="card-link">
+                <div class="card">
+                    <img src="Pictures/羊宮妃娜講電話.jfif" alt="羊宮妃娜講電話">
+                    <div class="card-content">
+                        <h2>羊宮妃娜</h2>
+                        <p>青二プロダクション<br>新人声優の羊宮妃那です！</p>
+                    </div>
                 </div>
-            </div>
+            </a>
 
-            <div class="card">
-                <img src="Pictures/Xi Winnie.png" alt="習維尼">
-                <div class="card-content">
-                    <h2>習維尼</h2>
-                    <p>高級迷因學（禁修）</p>
+            <a href="https://x.com/cocohayashi515?s=20" target="_blank" class="card-link"> <!-- 假設林鼓子推特 -->
+                <div class="card">
+                    <img src="Pictures/鼓子漂亮漂亮.jfif" alt="鼓子漂亮漂亮">
+                    <div class="card-content">
+                        <h2>林鼓子</h2>
+                        <p>株式会社LIBERTE<br>｜声優・俳優｜ドラム｜</p>
+                    </div>
                 </div>
-            </div>
+            </a>
 
+            <!-- Relax 和 Recruit 卡片不加連結，保持原樣 -->
             <div class="card relax-card">
                 <div class="card-content">
                     <h2>Relax Time 放鬆療癒時段</h2>
-                    <p>每天觀看 10 次可加學分</p>
                     <br>
-                    <iframe width="100%" height="400" src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" title="療癒影片" frameborder="0" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=0&loop=1&playlist=jfKfPfyJRdk" title="療癒影片" frameborder="0" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
-
             <div class="recruit-card">
                 <a href="https://draftee.gps.docms.gov.taipei/draftee" target="_blank" class="recruit-btn">立即加入國軍</a>
-                <p style="margin-top:20px;color:#666;">（點擊即視為自願，無法反悔）</p>
+                <p>(報名系統)</p>
             </div>
         </div>
     </div>

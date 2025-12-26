@@ -15,13 +15,13 @@ snake = {
     //畫蛇
     drawSnake: function () {
         this.moveSnake();
-        ctx.fillStyle='lime';
-        for (let i=0; i<this.body.length; i++) {      
-            ctx.fillRect(
-            this.body[i].x * BLOCK_SIZE,
-            this.body[i].y * BLOCK_SIZE,
-            BLOCK_SIZE,
-            BLOCK_SIZE
+        ctx.fillStyle = '#8ccf65ff';  // 淺綠（蘋果綠）
+        for (let i = 0; i < this.body.length; i++) {      
+           ctx.fillRect(
+                this.body[i].x * BLOCK_SIZE,
+                this.body[i].y * BLOCK_SIZE,
+                BLOCK_SIZE - 1,  // 留縫隙更美觀
+                BLOCK_SIZE - 1
             );
         }
     },
@@ -43,12 +43,12 @@ apple = {
     y: 5,
     //畫蘋果
     drawApple: function () {
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = '#ff4444';  // 紅色蘋果
     ctx.fillRect(
-        this.x * BLOCK_SIZE ,
-        this.y * BLOCK_SIZE ,
-        BLOCK_SIZE ,
-        BLOCK_SIZE
+        this.x * BLOCK_SIZE,
+        this.y * BLOCK_SIZE,
+        BLOCK_SIZE - 1,
+        BLOCK_SIZE - 1
     );
 
     },
@@ -97,7 +97,7 @@ function drawGame() {
 }
 
 function drawMap() {
-    ctx.fillStyle = 'black' ;
+    ctx.fillStyle = '#fffff0';  // 米白底
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 }
 

@@ -1,58 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<title>Snake Game</title>
-<style>
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', sans-serif;
-    color: #fff;
-  }
-  h1 {
-    font-size: 4rem;
-    margin: 0 0 30px;
-    text-shadow: 0 0 30px #0f0, 0 0 60px #0f0;
-    letter-spacing: 5px;
-  }
-  #startBtn {
-    padding: 16px 50px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #000;
-    background: #0f0;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    box-shadow: 0 0 30px #0f0;
-    transition: all 0.3s;
-    margin-bottom: 30px;
-  }
-  #startBtn:hover {
-    transform: scale(1.1);
-    box-shadow: 0 0 50px #0f0;
-  }
-  #canvas {
-    border: 6px solid #0f0;
-    border-radius: 20px;
-    box-shadow: 0 0 60px #0f0, inset 0 0 40px rgba(0,255,0,0.3);
-    background: #000;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Snake Game</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <main class="container">
+    <h1 class="title">Snake Game</h1>
+    <button id="startBtn" class="btn">Start / Restart</button>
+    <canvas id="canvas" width="400" height="400"></canvas>
+  </main>
 
-<h1>Snake Game</h1>
-<input type="button" value="Start / Restart" id="startBtn">
-<br>
-<canvas id="canvas" width="400" height="400"></canvas>
-
-<script src="snake.js"></script>
+  <script src="snake.js"></script>
 </body>
 </html>
