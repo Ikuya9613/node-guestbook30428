@@ -168,3 +168,5 @@ if (startButton) {
         gameStart();  // 再開始遊戲迴圈
     });
 }
+
+initGame();  // 頁面載入時初始化遊戲狀態
