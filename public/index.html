@@ -7,6 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Noto Sans TC', sans-serif;
@@ -59,7 +63,6 @@
         }
         .sidebar-toggle:hover { transform:translateY(-50%) scale(1.1); }
 
-        /* 其餘原有樣式保持不變 */
         .container { max-width:1100px; margin:0 auto; padding:20px; }
         header { text-align:center; padding:60px 20px; background:linear-gradient(rgba(0,0,0,.4),rgba(0,0,0,.4)), url('https://images.unsplash.com/photo-1517248135467-2c7ed3f9ed7c?w=1600') center/cover; color:white; border-radius:0 0 30px 30px; margin-bottom:40px; }
         header h1 { font-size:3.5rem; font-weight:900; margin-bottom:10px; text-shadow:0 4px 10px rgba(0,0,0,.6); }
@@ -125,27 +128,152 @@
             border-radius: 16px;
             box-shadow: 0 10px 30px rgba(0,0,0,.3);
         }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin: 60px 0 30px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            font-weight: 900;
+        }
+
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 40px; 
+            margin-bottom: 60px;
+        }
+
+        .article-card {
+            display: flex;
+            flex-direction: column;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            
+            /* 增加 scroll-margin-top 避免捲動後標題貼太緊，保留空隙 */
+            scroll-margin-top: 100px;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .article-img {
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .article-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .article-card:hover .article-img img {
+            transform: scale(1.05);
+        }
+
+        .article-text {
+            padding: 30px;
+        }
+
+        .article-text h3 {
+            font-size: 1.8rem;
+            color: #d4380d;
+            margin-bottom: 15px;
+            border-left: 5px solid #d4380d;
+            padding-left: 15px;
+        }
+
+        .article-text h4 {
+            font-size: 1.2rem;
+            color: #555;
+            margin: 15px 0 10px;
+            font-weight: 700;
+        }
+
+        .article-text p, .article-text li {
+            color: #666;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .article-text ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .comparison-table th {
+            background-color: #ff9a9e;
+            color: white;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        @media (min-width: 768px) {
+            .article-card {
+                flex-direction: row;
+                align-items: stretch;
+            }
+            
+            .article-img {
+                width: 35%; 
+                height: auto; 
+                min-height: 300px;
+            }
+            
+            .article-text {
+                width: 65%; 
+            }
+            
+            .article-card:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 側邊欄 -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
             <h3>其他實作</h3>
             <button class="close-btn">×</button>
         </div>
+        
         <ul>
             <li><a href="draw.html">小畫家</a></li>
             <li><a href="guess.html">猜數字</a></li>
             <li><a href="snake.html">單人貪食蛇</a></li>
             <li><a href="duosnake.html">雙人貪食蛇</a></li>
             <li><a href="guestbook.html">留言板</a></li>
-            <li><a href="test.html"></a></li>
         </ul>
     </div>
 
-    <!-- 側邊欄開關 -->
     <div class="sidebar-toggle">
         <i class="fas fa-bars"></i>
     </div>
@@ -157,7 +285,7 @@
 
     <div class="container">
         <div class="cards">
-            <a href="https://x.com/aoki__hina?s=20" target="_blank" class="card-link">
+            <a href="#detail-aoki" class="card-link">
                 <div class="card">
                     <img src="Pictures/青木陽菜yay.jfif" alt="青木陽菜yay">
                     <div class="card-content">
@@ -167,7 +295,7 @@
                 </div>
             </a>
 
-            <a href="https://x.com/Hina_Youmiya?s=20" target="_blank" class="card-link">
+            <a href="#detail-yomiya" class="card-link">
                 <div class="card">
                     <img src="Pictures/羊宮妃娜講電話.jfif" alt="羊宮妃娜講電話">
                     <div class="card-content">
@@ -177,7 +305,7 @@
                 </div>
             </a>
 
-            <a href="https://x.com/cocohayashi515?s=20" target="_blank" class="card-link"> <!-- 假設林鼓子推特 -->
+            <a href="#detail-hayashi" class="card-link"> 
                 <div class="card">
                     <img src="Pictures/鼓子漂亮漂亮.jfif" alt="鼓子漂亮漂亮">
                     <div class="card-content">
@@ -187,7 +315,6 @@
                 </div>
             </a>
 
-            <!-- Relax 和 Recruit 卡片不加連結，保持原樣 -->
             <div class="card relax-card">
                 <div class="card-content">
                     <h2>Relax Time 放鬆療癒時段</h2>
@@ -200,6 +327,74 @@
             <div class="recruit-card">
                 <a href="https://draftee.gps.docms.gov.taipei/draftee" target="_blank" class="recruit-btn">立即加入國軍</a>
                 <p>(報名系統)</p>
+            </div>
+        </div>
+        
+        <h2 class="section-title">聲優詳細檔案</h2>
+        
+        <div class="article-list">
+            
+            <div class="article-card" id="detail-aoki">
+                <div class="article-img">
+                    <a href="https://x.com/aoki__hina?s=20" target="_blank" class="card-link">
+                        <img src="Pictures/青木陽菜yay.jfif" alt="青木陽菜演出照">
+                    </a>
+                </div>
+                <div class="article-text">
+                    <h3>青木陽菜 (Aoki Hina) 🕊</h3>
+                    <p>擁有「絕對音感」的古典才女，出身於宮城縣，隸屬於事務所「響」。最廣為人知的角色是《BanG Dream! It's MyGO!!!!!》中的吉他手<b>要樂奈</b>。</p>
+                    
+                    <h4>音樂背景與實力</h4>
+                    <ul>
+                        <li>深厚的音樂造詣：5 歲開始學習古典鋼琴，大學主修聲樂，具備絕對音感。</li>
+                        <li>全能樂手：除了鋼琴，也精通吉他，並能在舞台上自彈自唱。</li>
+                    </ul>
+
+                    <h4>演藝亮點</h4>
+                    <p>在 MyGO!!!!! 樂團中擔任主奏吉他手。現實舞台上完美重現了角色「要樂奈」的天才設定，能一邊彈奏複雜旋律一邊擔任高難度和聲（如《無路矢》）。然而或許是因為經驗不足的緣故，偶爾會有失誤的時候。</p>
+                </div>
+            </div>
+
+            <div class="article-card" id="detail-yomiya">
+                <div class="article-img">
+                    <a href="https://x.com/Hina_Youmiya?s=20" target="_blank" class="card-link">
+                        <img src="Pictures/羊宮妃娜講電話.jfif" alt="羊宮妃娜">
+                    </a>
+                </div>
+                <div class="article-text">
+                    <h3>羊宮妃娜 (Yomiya Hina)</h3>
+                    <p>穿透心靈的「氛圍感」聲線，出身於奈良縣，隸屬於「青二 Production」。被公認為實力派新人，在《BanG Dream! It's MyGO!!!!!》中飾演靈魂人物<b>高松燈</b>。</p>
+                    
+                    <h4>獨特的演出風格</h4>
+                    <ul>
+                        <li>透明感聲線：既能詮釋《我內心的糟糕念頭》山田杏奈的甜美，也能展現高松燈那種近乎「吶喊」的朗讀式唱腔。</li>
+                        <li>獲獎肯定：2024 年憑藉優異表現獲得第 18 屆聲優獎「新人聲優賞」。</li>
+                    </ul>
+
+                    <h4>多才多藝</h4>
+                    <p>具備劍道初段資格，興趣涵蓋作詞、作曲、繪畫。為了角色自學木吉他，甚至在試鏡時為角色專門寫了一首歌。</p>
+                </div>
+            </div>
+
+            <div class="article-card" id="detail-hayashi">
+                <div class="article-img">
+                    <a href="https://x.com/cocohayashi515?s=20" target="_blank" class="card-link">
+                        <img src="Pictures/鼓子漂亮漂亮.jfif" alt="林鼓子">
+                    </a>
+                </div>
+                <div class="article-text">
+                    <h3>林鼓子 (Hayashi Koko)</h3>
+                    <p>經驗豐富的舞台全才，出身於靜岡縣，隸屬於「LIBERTE」。童星出道的她，擁有極強的舞台爆發力與抗壓性。</p>
+                    
+                    <h4>輝煌履歷與樂器挑戰</h4>
+                    <ul>
+                        <li>偶像經歷：曾是「Run Girls, Run!」成員，並接任《Love Live! 虹咲學園》的優木雪菜。</li>
+                        <li>搖滾鼓手：飾演鼓手<b>椎名立希</b>。受哥哥影響有打鼓基礎，在 Live 中以沉穩且充滿力量的鼓點撐起全場節奏。</li>
+                    </ul>
+
+                    <h4>個人魅力</h4>
+                    <p>擁有陽光、可靠的性格，常在團體中扮演大姐姐角色。熱愛皇后合唱團 (Queen)，這份對搖滾的熱愛讓她的現場演出極具感染力。</p>
+                </div>
             </div>
         </div>
     </div>
